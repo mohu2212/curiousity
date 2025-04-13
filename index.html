@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لا تضغط على الزر الأحمر!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
+            font-family: 'Arial', 'Segoe UI', sans-serif;
+            transition: all 0.3s;
+            overflow: hidden;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .button {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(145deg, #ff4444, #cc0000);
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3),
+                        inset 0 5px 15px rgba(255, 255, 255, 0.3),
+                        0 0 30px rgba(255, 0, 0, 0.5);
+            cursor: pointer;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            line-height: 1.2;
+            padding: 20px;
+            animation: pulse 2s infinite, glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 0, 0, 0.8); }
+            100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+        }
+
+        .button:hover {
+            transform: scale(1.1) rotate(5deg);
+            animation: shake 0.5s infinite, glow 1s infinite;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4),
+                       inset 0 5px 15px rgba(255, 255, 255, 0.4),
+                       0 0 50px rgba(255, 0, 0, 0.8);
+        }
+
+        .button:active {
+            transform: scale(0.95);
+        }
+
+        .counter {
+            margin-top: 20px;
+            font-size: 28px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                         0 0 20px rgba(255, 0, 0, 0.5);
+            font-weight: bold;
+            animation: counterPop 0.3s;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        @keyframes counterPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .message {
+            margin-top: 10px;
+            font-size: 24px;
+            color: #fff;
+            min-height: 24px;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5),
+                         0 0 10px rgba(255, 0, 0, 0.3);
+            animation: messageSlide 0.5s;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        @keyframes messageSlide {
+            0% { transform: translateX(100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        .emoji {
+            position: absolute;
+            font-size: 32px;
+            pointer-events: none;
+            animation: fall 3s linear forwards;
+            z-index: 0;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            animation: confetti 3s linear forwards;
+            z-index: 0;
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-10px) rotate(-5deg); }
+            75% { transform: translateX(10px) rotate(5deg); }
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg) scale(1); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg) scale(0.5); opacity: 0; }
+        }
+
+        .crack {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            pointer-events: none;
+        }
+
+        .crack::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 0;
+            background: rgba(0, 0, 0, 0.5);
+            top: 50%;
+            left: 50%;
+            transform-origin: center;
+            animation: crack 0.5s forwards;
+        }
+
+        @keyframes crack {
+            0% { height: 0; transform: rotate(0deg); }
+            100% { height: 100%; transform: rotate(45deg); }
+        }
+
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            animation: firework 1s ease-out forwards;
+            z-index: 0;
+        }
+
+        @keyframes firework {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(20); opacity: 0; }
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 10s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            50% { transform: translateY(-100px) translateX(50px); opacity: 1; }
+            100% { transform: translateY(-200px) translateX(100px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="particles" id="particles"></div>
+    <div class="container">
+        <button class="button" id="redButton">لا تضغط!</button>
+        <div class="counter" id="counter">مستوى الفضول: 0</div>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        const button = document.getElementById('redButton');
+        const counter = document.getElementById('counter');
+        const message = document.getElementById('message');
+        const body = document.body;
+        let clickCount = 0;
+
+        const messages = [
+            "🤔 هل تعرف ما سيحدث لو ضغطت مرة أخرى؟",
+            "😏 جرب تضغط مرة أخرى... إذا كنت تجرؤ!",
+            "👀 ماذا لو... ضغطت مرة أخرى؟",
+            "🤫 سر صغير... اضغط لتعرفه!",
+            "🎁 هدية خاصة تنتظرك... اضغط!",
+            "🔮 يمكنني التنبؤ بالمستقبل... اضغط لتعرف!",
+            "💫 شيء سحري سيحدث... اضغط!",
+            "🎪 عرض خاص... اضغط لتراه!",
+            "🎭 سر كبير... اضغط ليكتشف!",
+            "🎨 لوحة فنية... اضغط لتراها!",
+            "🎵 موسيقى سحرية... اضغط لتسمعها!",
+            "🏆 جائزة ثمينة... اضغط لتفوز بها!",
+            "🤹‍♂️ عرض بهلواني... اضغط لمشاهدته!",
+            "🎪 سيرك حقيقي... اضغط للدخول!",
+            "🎭 مسرحية كوميدية... اضغط لمشاهدتها!",
+            "🎨 فن رائع... اضغط لتراه!",
+            "🎵 سمفونية جميلة... اضغط لتسمعها!",
+            "🏆 كأس البطولة... اضغط لتفوز به!",
+            "🎪 سيرك النقرات... اضغط للدخول!",
+            "🤹‍♂️ بهلوان النقرات... اضغط لمشاهدته!",
+            "🎪 عرض النقرات... اضغط لمشاهدته!",
+            "🎭 مسرحية النقرات... اضغط لمشاهدتها!",
+            "🎨 فن النقرات... اضغط لتراه!",
+            "🎵 موسيقى النقرات... اضغط لتسمعها!",
+            "🏆 بطولة النقرات... اضغط لتفوز بها!",
+            "😈 الشيطان يخبئ سراً... اضغط لتعرفه!",
+            "👿 الشياطين تتحداك... اضغط إذا كنت شجاعاً!",
+            "🤬 تحدٍ جديد... اضغط إذا كنت قوياً!",
+            "👺 وحش ينتظرك... اضغط لتراه!",
+            "💀 الموت يخبئ مفاجأة... اضغط لتعرفها!",
+            "👽 الفضائيون يريدون مقابلتك... اضغط!",
+            "🤖 الروبوتات تتحداك... اضغط!",
+            "👾 مخلوقات فضائية... اضغط لتراها!",
+            "👻 أشباح تنتظرك... اضغط!",
+            "🎃 القرع يخبئ سراً... اضغط!",
+            "🦇 الخفافيش تتحداك... اضغط!",
+            "🕷️ العناكب تنسج شبكة... اضغط!",
+            "🦂 العقارب تنتظرك... اضغط!",
+            "🐍 الثعابين تتحداك... اضغط!",
+            "🦖 الديناصورات تريد مقابلتك... اضغط!",
+            "🦕 ديناصورات قديمة... اضغط لتراها!",
+            "🤪 شيء مجنون سيحدث... اضغط!",
+            "😈 الشيطان يخبئ سراً... اضغط!",
+            "👻 أشباح تنتظرك... اضغط!",
+            "🤖 الروبوتات تتحداك... اضغط!",
+            "👽 الفضائيون يريدون مقابلتك... اضغط!",
+            "🦖 الديناصورات تتحداك... اضغط!",
+            "🐍 الثعابين تنتظرك... اضغط!",
+            "🦇 الخفافيش تتحداك... اضغط!",
+            "🕷️ العناكب تنسج شبكة... اضغط!",
+            "🦂 العقارب تنتظرك... اضغط!"
+        ];
+
+        const sounds = [
+            'https://assets.mixkit.co/active_storage/sfx/2573/2573-preview.mp3',
+            'https://assets.mixkit.co/active_storage/sfx/2574/2574-preview.mp3',
+            'https://assets.mixkit.co/active_storage/sfx/2575/2575-preview.mp3'
+        ];
+
+        const challenges = [
+            { level: 50, message: "🎯 تحدٍ جديد: وصلت إلى 50 نقرة! هل تجرؤ على المزيد؟" },
+            { level: 100, message: "🌟 إنجاز رائع: 100 نقرة! هل يمكنك الوصول إلى 200؟" },
+            { level: 200, message: "💪 قوة خارقة: 200 نقرة! هل يمكنك الوصول إلى 300؟" },
+            { level: 300, message: "🔥 نار متقدة: 300 نقرة! هل يمكنك الوصول إلى 400؟" },
+            { level: 400, message: "⚡ سرعة البرق: 400 نقرة! هل يمكنك الوصول إلى 500؟" },
+            { level: 500, message: "🎪 سيرك النقرات: 500 نقرة! هل يمكنك الوصول إلى 600؟" },
+            { level: 600, message: "🎭 مسرحية كوميدية: 600 نقرة! هل يمكنك الوصول إلى 700؟" },
+            { level: 700, message: "🎨 لوحة فنية: 700 نقرة! هل يمكنك الوصول إلى 800؟" },
+            { level: 800, message: "🎵 سمفونية النقرات: 800 نقرة! هل يمكنك الوصول إلى 900؟" },
+            { level: 900, message: "🏆 بطولة النقرات: 900 نقرة! هل يمكنك الوصول إلى 1000؟" },
+            { level: 1000, message: "👑 ملك النقرات: 1000 نقرة! هل يمكنك الوصول إلى 2000؟" }
+        ];
+
+        const specialEffects = [
+            { level: 50, effect: "rainbow" },
+            { level: 100, effect: "fireworks" },
+            { level: 200, effect: "confetti" },
+            { level: 300, effect: "emoji" },
+            { level: 400, effect: "spin" },
+            { level: 500, effect: "zoom" },
+            { level: 600, effect: "shake" },
+            { level: 700, effect: "pulse" },
+            { level: 800, effect: "rotate" },
+            { level: 900, effect: "scale" },
+            { level: 1000, effect: "all" }
+        ];
+
+        function playSound() {
+            const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+            const audio = new Audio(randomSound);
+            audio.play();
+        }
+
+        function createCrack() {
+            const crack = document.createElement('div');
+            crack.className = 'crack';
+            button.appendChild(crack);
+            setTimeout(() => crack.remove(), 1000);
+        }
+
+        function createEmoji() {
+            const emojis = ['🤔', '😈', '👀', '🙄', '😅', '🤷', '😏', '🤪', '🎮', '💥', '🎉', '��'];
+            for (let i = 0; i < 5; i++) {
+                const emoji = document.createElement('div');
+                emoji.className = 'emoji';
+                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.left = Math.random() * window.innerWidth + 'px';
+                emoji.style.animationDuration = (2 + Math.random() * 2) + 's';
+                document.body.appendChild(emoji);
+                setTimeout(() => emoji.remove(), 3000);
+            }
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.animationDuration = (1 + Math.random() * 2) + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = Math.random() * window.innerWidth + 'px';
+            firework.style.top = Math.random() * window.innerHeight + 'px';
+            firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            document.body.appendChild(firework);
+            setTimeout(() => firework.remove(), 1000);
+        }
+
+        function updateBackground() {
+            const hue = (clickCount * 5) % 360;
+            body.style.backgroundColor = `hsl(${hue}, 70%, 80%)`;
+            body.style.transform = `rotate(${clickCount * 0.5}deg) scale(${1 + clickCount * 0.001})`;
+        }
+
+        function createRainbowEffect() {
+            const colors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3'];
+            let currentColor = 0;
+            setInterval(() => {
+                body.style.backgroundColor = colors[currentColor];
+                currentColor = (currentColor + 1) % colors.length;
+            }, 100);
+        }
+
+        function createSpinEffect() {
+            body.style.animation = 'spin 2s linear infinite';
+        }
+
+        function createZoomEffect() {
+            body.style.animation = 'zoom 2s linear infinite';
+        }
+
+        function createShakeEffect() {
+            body.style.animation = 'shake 0.5s linear infinite';
+        }
+
+        function createPulseEffect() {
+            body.style.animation = 'pulse 1s linear infinite';
+        }
+
+        function createRotateEffect() {
+            body.style.animation = 'rotate 2s linear infinite';
+        }
+
+        function createScaleEffect() {
+            body.style.animation = 'scale 2s linear infinite';
+        }
+
+        function createAllEffects() {
+            createRainbowEffect();
+            createSpinEffect();
+            createZoomEffect();
+            createShakeEffect();
+            createPulseEffect();
+            createRotateEffect();
+            createScaleEffect();
+        }
+
+        function createStars() {
+            const stars = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                stars.appendChild(star);
+            }
+        }
+
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        button.addEventListener('click', () => {
+            clickCount++;
+            playSound();
+            createCrack();
+            createEmoji();
+            createConfetti();
+            
+            // تحديات خاصة
+            const currentChallenge = challenges.find(challenge => challenge.level === clickCount);
+            if (currentChallenge) {
+                message.textContent = currentChallenge.message;
+                createFirework();
+            }
+
+            // تأثيرات خاصة
+            const currentEffect = specialEffects.find(effect => effect.level === clickCount);
+            if (currentEffect) {
+                switch (currentEffect.effect) {
+                    case 'rainbow':
+                        createRainbowEffect();
+                        break;
+                    case 'fireworks':
+                        for (let i = 0; i < 10; i++) {
+                            setTimeout(() => createFirework(), i * 200);
+                        }
+                        break;
+                    case 'confetti':
+                        for (let i = 0; i < 100; i++) {
+                            createConfetti();
+                        }
+                        break;
+                    case 'emoji':
+                        for (let i = 0; i < 20; i++) {
+                            createEmoji();
+                        }
+                        break;
+                    case 'spin':
+                        createSpinEffect();
+                        break;
+                    case 'zoom':
+                        createZoomEffect();
+                        break;
+                    case 'shake':
+                        createShakeEffect();
+                        break;
+                    case 'pulse':
+                        createPulseEffect();
+                        break;
+                    case 'rotate':
+                        createRotateEffect();
+                        break;
+                    case 'scale':
+                        createScaleEffect();
+                        break;
+                    case 'all':
+                        createAllEffects();
+                        break;
+                }
+            }
+
+            updateBackground();
+            counter.textContent = `مستوى الفضول: ${clickCount}`;
+            
+            if (!currentChallenge) {
+                message.textContent = messages[Math.floor(Math.random() * messages.length)];
+            }
+
+            if (clickCount === 1000) {
+                button.textContent = '👑 ملك النقرات!';
+                button.style.background = 'linear-gradient(145deg, #ffd700, #ffa500)';
+                createAllEffects();
+            }
+        });
+
+        // تهيئة التأثيرات
+        createStars();
+        createParticles();
+    </script>
+</body>
+</html>
