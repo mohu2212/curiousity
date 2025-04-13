@@ -19,6 +19,7 @@
             overflow: hidden;
             color: white;
             touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .container {
@@ -26,18 +27,20 @@
             position: relative;
             z-index: 1;
             background: rgba(255, 255, 255, 0.2);
-            padding: 20px;
+            padding: 15px;
             border-radius: 20px;
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
-            width: 90%;
-            max-width: 500px;
-            margin: 20px auto;
+            width: 95%;
+            max-width: 400px;
+            margin: 10px auto;
+            overflow: visible;
+            transform-style: preserve-3d;
         }
 
         .button {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             background: linear-gradient(145deg, #FF6B6B, #FF8E8E);
             border-radius: 50%;
             border: none;
@@ -45,73 +48,77 @@
                         inset 0 5px 15px rgba(255, 255, 255, 0.4),
                         0 0 30px rgba(255, 107, 107, 0.5);
             cursor: pointer;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             color: white;
             text-transform: uppercase;
             transition: all 0.3s;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             line-height: 1.2;
-            padding: 15px;
-            animation: pulse 2s infinite, glow 2s infinite;
+            padding: 10px;
+            animation: float 3s ease-in-out infinite;
             -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            transform-style: preserve-3d;
+            backface-visibility: visible;
         }
 
         @media (min-width: 768px) {
             .button {
-                width: 300px;
-                height: 300px;
-                font-size: 32px;
-                padding: 20px;
+                width: 200px;
+                height: 200px;
+                font-size: 24px;
+                padding: 15px;
             }
         }
 
         .counter {
-            margin-top: 15px;
-            font-size: 20px;
+            margin-top: 10px;
+            font-size: 16px;
             color: #fff;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
                          0 0 20px rgba(255, 107, 107, 0.5);
             font-weight: bold;
             animation: counterPop 0.3s;
             background: rgba(255, 255, 255, 0.2);
-            padding: 8px 15px;
+            padding: 6px 12px;
             border-radius: 10px;
         }
 
         @media (min-width: 768px) {
             .counter {
-                font-size: 28px;
-                padding: 10px 20px;
+                font-size: 20px;
+                padding: 8px 15px;
             }
         }
 
         .message {
-            margin-top: 10px;
-            font-size: 18px;
+            margin-top: 8px;
+            font-size: 14px;
             color: #fff;
-            min-height: 24px;
+            min-height: 20px;
             font-weight: bold;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.5),
                          0 0 10px rgba(255, 107, 107, 0.3);
             animation: messageSlide 0.5s;
             background: rgba(255, 255, 255, 0.2);
-            padding: 8px 15px;
+            padding: 6px 12px;
             border-radius: 10px;
             line-height: 1.4;
         }
 
         @media (min-width: 768px) {
             .message {
-                font-size: 24px;
-                padding: 10px 20px;
+                font-size: 18px;
+                padding: 8px 15px;
             }
         }
 
         .emoji {
             position: absolute;
-            font-size: 24px;
+            font-size: 20px;
             pointer-events: none;
             animation: fall 3s linear forwards;
             z-index: 0;
@@ -119,14 +126,14 @@
 
         @media (min-width: 768px) {
             .emoji {
-                font-size: 32px;
+                font-size: 24px;
             }
         }
 
         .confetti {
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background-color: #FF6B6B;
             animation: confetti 3s linear forwards;
             z-index: 0;
@@ -134,15 +141,15 @@
 
         @media (min-width: 768px) {
             .confetti {
-                width: 10px;
-                height: 10px;
+                width: 8px;
+                height: 8px;
             }
         }
 
         .firework {
             position: absolute;
-            width: 4px;
-            height: 4px;
+            width: 3px;
+            height: 3px;
             border-radius: 50%;
             background: #FF6B6B;
             animation: firework 1s ease-out forwards;
@@ -151,41 +158,76 @@
 
         @media (min-width: 768px) {
             .firework {
-                width: 5px;
-                height: 5px;
+                width: 4px;
+                height: 4px;
             }
         }
 
         /* تحسينات للأجهزة المحمولة */
         @media (max-width: 480px) {
             .container {
-                padding: 15px;
-                width: 95%;
+                padding: 10px;
+                width: 90%;
             }
 
             .button {
-                width: 180px;
-                height: 180px;
-                font-size: 20px;
-                padding: 10px;
+                width: 120px;
+                height: 120px;
+                font-size: 16px;
+                padding: 8px;
             }
 
             .counter {
-                font-size: 18px;
-                padding: 6px 12px;
+                font-size: 14px;
+                padding: 4px 8px;
             }
 
             .message {
-                font-size: 16px;
-                padding: 6px 12px;
+                font-size: 12px;
+                padding: 4px 8px;
             }
         }
 
-        /* منع التكبير على الأجهزة المحمولة */
-        @media (max-width: 480px) {
-            input, select, textarea {
-                font-size: 16px !important;
+        /* تحسينات للأجهزة الصغيرة جداً */
+        @media (max-width: 320px) {
+            .button {
+                width: 100px;
+                height: 100px;
+                font-size: 14px;
             }
+
+            .counter {
+                font-size: 12px;
+            }
+
+            .message {
+                font-size: 11px;
+            }
+        }
+
+        /* تحسينات للأجهزة الأفقية */
+        @media (max-height: 500px) {
+            .container {
+                padding: 5px;
+                margin: 5px auto;
+            }
+
+            .button {
+                width: 100px;
+                height: 100px;
+                font-size: 14px;
+            }
+
+            .counter, .message {
+                margin-top: 5px;
+                padding: 4px 8px;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 107, 107, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(255, 107, 107, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 107, 107, 0.5); }
         }
 
         @keyframes glow {
@@ -195,8 +237,8 @@
         }
 
         .button:hover {
-            transform: scale(1.1) rotate(5deg);
-            animation: shake 0.5s infinite, glow 1s infinite;
+            transform: scale(1.1);
+            animation: pulse 1s infinite, glow 1s infinite;
             box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4),
                        inset 0 5px 15px rgba(255, 255, 255, 0.5),
                        0 0 50px rgba(255, 107, 107, 0.8);
@@ -204,6 +246,8 @@
 
         .button:active {
             transform: scale(0.95);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3),
+                       inset 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         @keyframes counterPop {
@@ -218,9 +262,9 @@
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0) rotate(0deg); }
-            25% { transform: translateX(-10px) rotate(-5deg); }
-            75% { transform: translateX(10px) rotate(5deg); }
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
         @keyframes fall {
@@ -297,9 +341,9 @@
         }
 
         @keyframes float {
-            0% { transform: translateY(0) translateX(0); opacity: 0; }
-            50% { transform: translateY(-100px) translateX(50px); opacity: 1; }
-            100% { transform: translateY(-200px) translateX(100px); opacity: 0; }
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+            100% { transform: translateY(0) scale(1); }
         }
     </style>
 </head>
@@ -422,7 +466,7 @@
 
         function createEmoji() {
             const emojis = ['🤔', '😈', '👀', '🙄', '😅', '🤷', '😏', '🤪', '🎮', '💥', '🎉', '🤯'];
-            const emojiCount = window.innerWidth < 768 ? 3 : 5;
+            const emojiCount = window.innerWidth < 768 ? 2 : 3;
             for (let i = 0; i < emojiCount; i++) {
                 const emoji = document.createElement('div');
                 emoji.className = 'emoji';
@@ -435,7 +479,7 @@
         }
 
         function createConfetti() {
-            const confettiCount = window.innerWidth < 768 ? 30 : 50;
+            const confettiCount = window.innerWidth < 768 ? 20 : 30;
             for (let i = 0; i < confettiCount; i++) {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
@@ -461,50 +505,59 @@
             const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', '#D4A5A5', '#9B59B6'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             body.style.background = `linear-gradient(45deg, ${randomColor}, ${colors[(colors.indexOf(randomColor) + 1) % colors.length]})`;
-            body.style.transform = `rotate(${clickCount * 0.5}deg) scale(${1 + clickCount * 0.001})`;
         }
 
         function createRainbowEffect() {
             const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', '#D4A5A5', '#9B59B6'];
             let currentColor = 0;
-            setInterval(() => {
+            const interval = setInterval(() => {
                 body.style.background = `linear-gradient(45deg, ${colors[currentColor]}, ${colors[(currentColor + 1) % colors.length]})`;
                 currentColor = (currentColor + 1) % colors.length;
             }, 100);
+            return interval;
         }
 
         function createSpinEffect() {
-            body.style.animation = 'spin 2s linear infinite';
+            const container = document.querySelector('.container');
+            container.style.animation = 'spin 2s linear infinite';
+            return container;
         }
 
         function createZoomEffect() {
-            body.style.animation = 'zoom 2s linear infinite';
+            const container = document.querySelector('.container');
+            container.style.animation = 'zoom 2s linear infinite';
+            return container;
         }
 
         function createShakeEffect() {
-            body.style.animation = 'shake 0.5s linear infinite';
+            const container = document.querySelector('.container');
+            container.style.animation = 'shake 0.5s linear infinite';
+            return container;
         }
 
         function createPulseEffect() {
-            body.style.animation = 'pulse 1s linear infinite';
+            const container = document.querySelector('.container');
+            container.style.animation = 'pulse 1s linear infinite';
+            return container;
         }
 
         function createRotateEffect() {
-            body.style.animation = 'rotate 2s linear infinite';
+            const container = document.querySelector('.container');
+            container.style.animation = 'rotate 2s linear infinite';
+            return container;
         }
 
         function createScaleEffect() {
-            body.style.animation = 'scale 2s linear infinite';
+            const container = document.querySelector('.container');
+            container.style.animation = 'scale 2s linear infinite';
+            return container;
         }
 
         function createAllEffects() {
-            createRainbowEffect();
-            createSpinEffect();
-            createZoomEffect();
-            createShakeEffect();
-            createPulseEffect();
-            createRotateEffect();
-            createScaleEffect();
+            const container = document.querySelector('.container');
+            const rainbowInterval = createRainbowEffect();
+            container.style.animation = 'pulse 1s linear infinite';
+            return { container, rainbowInterval };
         }
 
         function createStars() {
@@ -548,9 +601,16 @@
             // تأثيرات خاصة
             const currentEffect = specialEffects.find(effect => effect.level === clickCount);
             if (currentEffect) {
+                // إيقاف أي تأثيرات سابقة
+                const container = document.querySelector('.container');
+                container.style.animation = '';
+                if (window.rainbowInterval) {
+                    clearInterval(window.rainbowInterval);
+                }
+
                 switch (currentEffect.effect) {
                     case 'rainbow':
-                        createRainbowEffect();
+                        window.rainbowInterval = createRainbowEffect();
                         break;
                     case 'fireworks':
                         for (let i = 0; i < 10; i++) {
@@ -586,7 +646,8 @@
                         createScaleEffect();
                         break;
                     case 'all':
-                        createAllEffects();
+                        const effects = createAllEffects();
+                        window.rainbowInterval = effects.rainbowInterval;
                         break;
                 }
             }
@@ -601,7 +662,8 @@
             if (clickCount === 1000) {
                 button.textContent = '👑 ملك النقرات!';
                 button.style.background = 'linear-gradient(145deg, #ffd700, #ffa500)';
-                createAllEffects();
+                const effects = createAllEffects();
+                window.rainbowInterval = effects.rainbowInterval;
             }
         });
 
